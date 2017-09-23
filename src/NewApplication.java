@@ -1,9 +1,8 @@
-import java.io.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 public class NewApplication extends JFrame{
@@ -165,6 +164,21 @@ public class NewApplication extends JFrame{
             fout.close();
         }
         catch (Exception e){};
+//
+//        try {
+//            FileWriter fw = new FileWriter(fileName);
+//            BufferedWriter bw = new BufferedWriter(fw);
+////            for(i = 0; i < fieldName.size(); i++) {
+////                line = fieldName.get(i) + "/" + fieldType.get(i) + "\n";
+////                bw.write(line);
+////            }
+//
+//            for(i = 0; i < fieldName.size(); i++)
+//                System.out.println(fieldName.get(i));
+//
+//            bw.close();
+//        }
+//        catch(IOException e){};
     }
 
     public static void main(String[] args) {
