@@ -7,19 +7,19 @@ import java.io.*;
 
 public class DataStorage extends JFrame{
 
-    JPanel headerPane, bodyPane, containerPane;
+    protected JPanel headerPane, bodyPane, containerPane;
 
-    JButton openFile, saveData;
+    protected JButton openFile, saveData;
 
-    JScrollPane bodyScroll;
+    protected JScrollPane bodyScroll;
 
-    JFileChooser jf;
+    protected JFileChooser jf;
 
-    File file;
+    protected File file;
 
-    ArrayList<JLabel> fieldLabel;
-    ArrayList<JTextField> fieldArea;
-    ArrayList<String> fieldType;
+    protected ArrayList<JLabel> fieldLabel;
+    protected ArrayList<JTextField> fieldArea;
+    protected ArrayList<String> fieldType;
 
     DataStorage() {
 
@@ -29,7 +29,7 @@ public class DataStorage extends JFrame{
         openFile = new JButton("Open New File");
         jf = new JFileChooser();
 
-        bodyPane = new JPanel(new GridLayout(40, 2));
+        bodyPane = new JPanel(new GridLayout(10, 2));
 
         bodyScroll = new JScrollPane(bodyPane);
 
@@ -59,7 +59,6 @@ public class DataStorage extends JFrame{
         int i = jf.showOpenDialog(this);
         if(i == JFileChooser.APPROVE_OPTION) {
             file =jf.getSelectedFile();
-            System.out.println(file.getName());
         }
 
         showData(file);
@@ -68,29 +67,33 @@ public class DataStorage extends JFrame{
 
     void showData(File f) {
 
-        int i;
+        int i, flag = 0, j = 0;
         char ch;
         String fName = "";
+        String lines;
+
+        System.out.println(f.getName());
 
         BufferedReader br;
 
         try {
-            br = new BufferedReader(new FileReader(f));
-            while(br.readLine() != null) {
-                System.out.println(br.readLine().length());
-                for(i = 0; i < br.readLine().length(); i++) {
-                    ch = br.readLine().charAt(i);
-                    System.out.println(ch);
-                    if(ch != '/') {
-                        fName = fName + ch;
+            br = new BufferedReader(new FileReader(f.getName()));
+
+            while(flag == 0) {
+                lines = br.readLine();
+                for(i = 0; i < lines.length(); i++) {
+                    ch = lines.charAt(i);
+                    if(ch == '/') {
+                        break;
                     }
                     else {
-                        break;
+                        fName = fName + ch;
                     }
                 }
                 System.out.println(fName);
                 fieldLabel.add(new JLabel(fName));
-                if(br.readLine().charAt(i + 1) == 'T') {
+                j++;
+                if(lines.charAt(i + 1) == 'T') {
                     fieldArea.add(new JTextField());
                     fieldType.add("Text");
                 }
@@ -98,9 +101,14 @@ public class DataStorage extends JFrame{
                     fieldArea.add(new JTextField());
                     fieldType.add("Number");
                 }
+
+                if(br.readLine() == null)
+                    flag = 1;
+
+                fName = "";
             }
 
-            System.out.println();
+            System.out.println("End");
 
             br.close();
         }
@@ -108,11 +116,13 @@ public class DataStorage extends JFrame{
 
         for(i = 0; i < fieldLabel.size(); i++) {
             bodyPane.add(fieldLabel.get(i));
+            System.out.println(fieldLabel.get(i));
             bodyPane.add(fieldArea.get(i));
             if(fieldType.get(i).equals("Text"))
                 bodyPane.add(new JLabel("Please Enter Text Data"));
             else
                 bodyPane.add(new JLabel("Please Enter Number Data"));
+            System.out.println(bodyPane);
         }
 
     }

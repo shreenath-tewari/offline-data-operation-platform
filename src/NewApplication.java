@@ -7,29 +7,28 @@ import java.util.ArrayList;
 
 public class NewApplication extends JFrame{
 
-    int fieldCounter;
+    protected int fieldCounter;
 
-    JLabel applicationTitle, applicationNameLabel;
+    protected JLabel applicationTitle, applicationNameLabel;
 
-    JTextField applicationNameTextField;
+    protected JTextField applicationNameTextField;
 
-    JPanel containerPane, fieldElements, footerPanel;
+    protected JPanel containerPane, fieldElements, footerPanel;
 
-    JButton saveButton, addFieldButton;
+    protected JButton saveButton, addFieldButton;
 
-    JScrollPane fieldElementsScrollPane;
+    protected JScrollPane fieldElementsScrollPane;
 
-    ArrayList<String> fieldName;
-    ArrayList<String> fieldType;
-    ArrayList<JLabel> fieldNameLabel;
-    ArrayList<JLabel> fieldTypeLabel;
-    ArrayList<JTextField> fieldNameTextField;
-    ArrayList<JRadioButton> textField;
-    ArrayList<JRadioButton> numberField;
-    ArrayList<JRadioButton> listField;
-    ArrayList<String> optionChosen;
+    protected ArrayList<String> fieldName;
+    protected ArrayList<String> fieldType;
+    protected ArrayList<JLabel> fieldNameLabel;
+    protected ArrayList<JLabel> fieldTypeLabel;
+    protected ArrayList<JTextField> fieldNameTextField;
+    protected ArrayList<JRadioButton> textField;
+    protected ArrayList<JRadioButton> numberField;
+    protected ArrayList<JRadioButton> listField;
 
-    NewApplication() {
+    public NewApplication() {
 
         fieldCounter = -1;
 
@@ -82,13 +81,14 @@ public class NewApplication extends JFrame{
     void addElementsToFieldElementsPane() {
 
         fieldCounter++;
-        addNewFields(fieldCounter);
+        //addNewFields(fieldCounter);
 
         addFieldButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                addNewFields(fieldCounter++);
-
+                addNewFields(fieldCounter);
+                fieldCounter++;
+                //System.out.println(fieldCounter);
             }
         });
     }
@@ -100,6 +100,7 @@ public class NewApplication extends JFrame{
         textField.add(new JRadioButton("Text"));
         numberField.add(new JRadioButton("Number"));
         listField.add(new JRadioButton("List"));
+        //System.out.println(fieldNameTextField.size());
         fieldElements.add(fieldNameLabel.get(c));
         fieldElements.add(fieldNameTextField.get(c));
         fieldElements.add(fieldTypeLabel.get(c));
@@ -152,33 +153,22 @@ public class NewApplication extends JFrame{
         }
 
         fileName = applicationNameTextField.getText() + ".txt";
-        FileOutputStream fout;
 
         try {
-            fout = new FileOutputStream(fileName);
-            for(i = 0; i < fieldNameLabel.size(); i++) {
+            FileWriter fw = new FileWriter(fileName);
+            BufferedWriter bw = new BufferedWriter(fw);
+            System.out.println(fieldName.size());
+            for(i = 0; i < fieldName.size(); i++) {
                 line = fieldName.get(i) + "/" + fieldType.get(i) + "\n";
-                byte b[] = line.getBytes();
-                fout.write(b);
+                bw.write(line);
             }
-            fout.close();
+
+            for(i = 0; i < fieldName.size(); i++)
+                System.out.println(fieldName.get(i));
+
+            bw.close();
         }
-        catch (Exception e){};
-//
-//        try {
-//            FileWriter fw = new FileWriter(fileName);
-//            BufferedWriter bw = new BufferedWriter(fw);
-////            for(i = 0; i < fieldName.size(); i++) {
-////                line = fieldName.get(i) + "/" + fieldType.get(i) + "\n";
-////                bw.write(line);
-////            }
-//
-//            for(i = 0; i < fieldName.size(); i++)
-//                System.out.println(fieldName.get(i));
-//
-//            bw.close();
-//        }
-//        catch(IOException e){};
+        catch(IOException e){};
     }
 
     public static void main(String[] args) {

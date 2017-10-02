@@ -1,0 +1,4 @@
+Patient Name/Text
+Patient Disease/Text
+Patient Ward Number/Number
+Patient Discharge Date/Text

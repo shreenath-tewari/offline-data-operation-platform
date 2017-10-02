@@ -1,0 +1,4 @@
+Book Name/Text
+Author Name/Text
+Fine/Number
+Student Name/Text
