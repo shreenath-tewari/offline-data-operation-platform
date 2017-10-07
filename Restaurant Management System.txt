@@ -1,0 +1,3 @@
+Table No./Number
+Table Bill/Number
+Bill Items/Text

@@ -100,14 +100,12 @@ public class NewApplication extends JFrame{
         textField.add(new JRadioButton("Text"));
         numberField.add(new JRadioButton("Number"));
         listField.add(new JRadioButton("List"));
-        //System.out.println(fieldNameTextField.size());
         fieldElements.add(fieldNameLabel.get(c));
         fieldElements.add(fieldNameTextField.get(c));
         fieldElements.add(fieldTypeLabel.get(c));
         fieldElements.add(textField.get(c));
         fieldElements.add(numberField.get(c));
-        //fieldElements.add(listField.get(c));
-
+        System.out.println(fieldElements);
         setOptionChooser(c);
 
     }

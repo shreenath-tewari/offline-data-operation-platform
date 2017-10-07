@@ -29,7 +29,7 @@ public class DataStorage extends JFrame{
         openFile = new JButton("Open New File");
         jf = new JFileChooser();
 
-        bodyPane = new JPanel(new GridLayout(10, 2));
+        bodyPane = new JPanel(new GridLayout(20, 2));
 
         bodyScroll = new JScrollPane(bodyPane);
 
@@ -65,6 +65,13 @@ public class DataStorage extends JFrame{
 
     }
 
+    void setApplicationTitle(String fileName) {
+        JLabel setTitle = new JLabel(fileName.substring(0, (fileName.length() - 4)));
+        setTitle.setHorizontalAlignment(JLabel.CENTER);
+        headerPane.add(setTitle);
+        headerPane.validate();
+    }
+
     void showData(File f) {
 
         int i, flag = 0, j = 0;
@@ -72,9 +79,9 @@ public class DataStorage extends JFrame{
         String fName = "";
         String lines;
 
-        System.out.println(f.getName());
-
         BufferedReader br;
+
+        setApplicationTitle(f.getName());
 
         try {
             br = new BufferedReader(new FileReader(f.getName()));
@@ -90,7 +97,6 @@ public class DataStorage extends JFrame{
                         fName = fName + ch;
                     }
                 }
-                System.out.println(fName);
                 fieldLabel.add(new JLabel(fName));
                 j++;
                 if(lines.charAt(i + 1) == 'T') {
@@ -102,13 +108,11 @@ public class DataStorage extends JFrame{
                     fieldType.add("Number");
                 }
 
-                if(br.readLine() == null)
+                if(lines == null)
                     flag = 1;
 
                 fName = "";
             }
-
-            System.out.println("End");
 
             br.close();
         }
@@ -116,14 +120,14 @@ public class DataStorage extends JFrame{
 
         for(i = 0; i < fieldLabel.size(); i++) {
             bodyPane.add(fieldLabel.get(i));
-            System.out.println(fieldLabel.get(i));
             bodyPane.add(fieldArea.get(i));
             if(fieldType.get(i).equals("Text"))
                 bodyPane.add(new JLabel("Please Enter Text Data"));
             else
                 bodyPane.add(new JLabel("Please Enter Number Data"));
-            System.out.println(bodyPane);
+            bodyPane.validate();
         }
+        System.out.println("Body Pane" + bodyPane);
 
     }
 
